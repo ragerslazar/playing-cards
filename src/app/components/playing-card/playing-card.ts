@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input, Input, InputSignal} from '@angular/core';
 import {Monster} from '../../models/monster.model';
 
 @Component({
@@ -8,13 +8,11 @@ import {Monster} from '../../models/monster.model';
   styleUrl: './playing-card.css',
 })
 export class PlayingCard {
-  @Input({
-    // required: true,  Forcer l'ajout de l'attribut dans le html,
-    // alias: 'my-monster',  Force a donner un autre nom a l'attribut donc my-monster au lieu de monster
-    // transform: (value: Monster) => {  Modifie une donnée avant l'affichage
-    //   value.hp = value.hp / 2;
-    //   return value;
-    // }
-  }) monster: Monster = new Monster();
-  // @Input() monster: Monster = new Monster();
+  monster: InputSignal<Monster> = input(new Monster(), {
+    alias: 'my-monster', // Donne un alias (comme pour les @Input)
+    transform: (value: Monster) => { // Modifie une valeur avant l'affichage (comme pour les @Input)
+      value.hp = value.hp /2;
+      return value;
+    }
+  });
 }
